@@ -82,4 +82,11 @@ public class TodoService {
                 todo.getModifiedAt()
         );
     }
+
+    @Transactional
+    public void deleteTodo(long todoId) {
+        Todo todo = todoRepository.findByIdWithUser(todoId)
+                .orElseThrow(() -> new InvalidRequestException("Todo not found"));
+        todoRepository.delete(todo);
+    }
 }

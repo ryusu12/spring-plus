@@ -43,4 +43,14 @@ public class TodoController {
     public ResponseEntity<TodoResponse> getTodo(@PathVariable long todoId) {
         return ResponseEntity.ok(todoService.getTodo(todoId));
     }
+
+    /**
+     * cascade 작동을 확인하기위해 임시로 만든 삭제 메서드
+     *
+     * @param todoId 삭제 대상
+     */
+    @DeleteMapping("/todos/{todoId}")
+    public void deleteTodo(@PathVariable long todoId) {
+        todoService.deleteTodo(todoId);
+    }
 }
