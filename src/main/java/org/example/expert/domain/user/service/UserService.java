@@ -6,6 +6,7 @@ import org.example.expert.domain.common.exception.InvalidRequestException;
 import org.example.expert.domain.user.dto.request.UserChangePasswordRequest;
 import org.example.expert.domain.user.dto.response.UserResponse;
 import org.example.expert.domain.user.entity.User;
+import org.example.expert.domain.user.repository.QUserRepository;
 import org.example.expert.domain.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +19,7 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final QUserRepository qUserRepository;
     private final PasswordEncoder passwordEncoder;
 
     public UserResponse getUser(long userId) {
@@ -26,13 +28,7 @@ public class UserService {
     }
 
     public List<UserResponse> getUsersByNickname(String nickname) {
-        List<User> users = userRepository.findByNickname(nickname);
-        return users.stream()
-                .map(user -> new UserResponse(
-                        user.getId(),
-                        user.getEmail(),
-                        user.getNickname()
-                )).toList();
+        return qUserRepository.findByNickname(nickname);
     }
 
     @Transactional
