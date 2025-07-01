@@ -26,3 +26,21 @@
 실제로 여러번 실행하게 되면 기존보다 늘어나는 경우가 있어, 큰 영향이 없다.
 
 ![findTestImg2.png](readme/findTestImg2.png)
+
+
+## 개선2 : 인덱스
+
+인덱스를 사용하면 생성이나 수정, 삭제와 같이 데이터를 변화시키는 과정에는 비효율적이지만, 데이터 조회를 빠르게 해준다.
+
+`nickname`을 기준으로 인덱스 `nickname_idx`를 생성했다.
+
+
+![indexImg.png](readme/indexImg.png)
+
+### 결과
+
+**테스트는 1.232초, 조회는 0.684초** 만에 조회했다.
+
+이전보다 확실하게 조회 속도가 감소했다.
+
+![findTestImg3.png](readme/findTestImg3.png)
