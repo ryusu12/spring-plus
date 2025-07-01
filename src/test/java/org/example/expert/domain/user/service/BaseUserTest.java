@@ -3,12 +3,15 @@ package org.example.expert.domain.user.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.expert.config.PasswordEncoder;
 import org.example.expert.domain.auth.dto.request.SigninRequest;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.sql.PreparedStatement;
@@ -19,6 +22,7 @@ import java.util.concurrent.Executors;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
+@ActiveProfiles("test")
 @SpringBootTest
 @AutoConfigureMockMvc
 public class BaseUserTest {
@@ -39,6 +43,8 @@ public class BaseUserTest {
 
     private static final String PASSWORD = "Password123!";
 
+    @DisplayName("유저 100만건 생성")
+    @Test
     protected void createManyUsers() throws InterruptedException {
         int size = USERS_COUNT / BATCH_SIZE;
         int threadPoolSize = Runtime.getRuntime().availableProcessors();
@@ -88,6 +94,7 @@ public class BaseUserTest {
         });
     }
 
+    // 로그인 토큰 받기
     protected String getTokenByLogin(String email) throws Exception {
         // given
         SigninRequest requestDto = new SigninRequest(email, PASSWORD);
@@ -103,6 +110,7 @@ public class BaseUserTest {
         return objectMapper.readTree(signupAsString).get("bearerToken").asText();
     }
 
+    // 유저 정보 가져오기
     protected String getEmail() {
         return "email" + BATCH_SIZE + 1 + "@example.com";
     }

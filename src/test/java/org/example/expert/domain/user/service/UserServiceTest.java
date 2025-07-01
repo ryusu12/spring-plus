@@ -1,27 +1,23 @@
 package org.example.expert.domain.user.service;
 
 import org.example.expert.domain.user.dto.response.UserResponse;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.ResultActions;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@ActiveProfiles("test")
 @SpringBootTest
 @AutoConfigureMockMvc
 public class UserServiceTest extends BaseUserTest {
-
-    @BeforeEach
-    void setInit() throws InterruptedException {
-        createManyUsers();
-    }
 
     @DisplayName("유저를 닉네임으로 검색할 때 얼마나 걸리는지 테스트")
     @Test
