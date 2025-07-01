@@ -60,4 +60,32 @@ public class UserServiceTest extends BaseUserTest {
         assertEquals(email, response.getEmail());
     }
 
+    @DisplayName("닉네임을 정확히 입력하지 않으면 유저를 찾지 못한다")
+    @Test
+    public void exception_findUsersByNickname() throws Exception {
+        // given
+        String email = getEmail();
+        String nickname = "name";
+
+        // 로그인 토큰 구하기
+        String token = getTokenByLogin(email);
+
+
+        // when
+        ResultActions getUsersByNickname = mockMvc.perform(
+                get("/users")
+                        .header(HttpHeaders.AUTHORIZATION, token)
+                        .param("nickname", nickname)
+        );
+        String getProfileAsString = getUsersByNickname.andReturn()
+                .getResponse()
+                .getContentAsString();
+
+
+        // then
+        getUsersByNickname.andExpect(status().isOk());
+        assertEquals("[]", getProfileAsString);
+    }
+
+
 }
